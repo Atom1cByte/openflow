@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenFlow Hub</title>
+    <link rel="stylesheet" href="hub.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="nav">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </span>
+          <span class="name">Flow</span>
+        </div>
+        <div class="nav-group">
+          <button class="nav-item active" data-view="home" type="button">Home</button>
+          <button class="nav-item" data-view="history" type="button">History</button>
+          <button class="nav-item" data-view="snippets" type="button">Snippets</button>
+          <button class="nav-item" data-view="dictionary" type="button">Dictionary</button>
+          <button class="nav-item" data-view="styles" type="button">Styles</button>
+          <button class="nav-item" data-view="settings" type="button">Settings</button>
+        </div>
+      </aside>
+
+      <main class="hub">
+        <section class="workspace section-view is-active" data-section="home">
+          <div class="workspace-panel">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Home</p>
+                <h2>Runtime dashboard</h2>
+                <p class="panel-note">Monitor hotkeys, launch dictation, and see your local writing tools at a glance.</p>
+              </div>
+              <div class="runtime-status">
+                <span class="status-dot" id="status-dot"></span>
+                <div class="status-copy">
+                  <span id="runtime-label">Checking runtime</span>
+                  <span id="runtime-hotkey">Shortcut pending</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-card">
+                <span class="stat-label">Snippets</span>
+                <strong id="stat-snippets">0</strong>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">Dictionary Terms</span>
+                <strong id="stat-dictionary">0</strong>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">Styles</span>
+                <strong id="stat-styles">0</strong>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">History Items</span>
+                <strong id="stat-history">0</strong>
+              </div>
+            </div>
+
+            <div class="home-grid">
+              <section class="setting-card compact-card">
+                <h3>Quick actions</h3>
+                <button id="toggle" class="primary" type="button">Toggle Dictation</button>
+                <button id="toggle-bar" class="ghost" type="button">Hide Dock Bar</button>
+                <button id="save-home" class="ghost" type="button">Save Current Settings</button>
+                <p class="quiet">Use this page to operate the app. Runtime settings live in Settings.</p>
+              </section>
+
+              <section class="setting-card compact-card">
+                <h3>Recent local activity</h3>
+                <div class="summary-list" id="home-summary"></div>
+              </section>
+
+              <section class="setting-card compact-card">
+                <h3>What is stored locally</h3>
+                <div class="summary-list">
+                  <article class="summary-item">
+                    <strong>History</strong>
+                    <span>Recent actions and saves stay on this machine.</span>
+                  </article>
+                  <article class="summary-item">
+                    <strong>Snippets, dictionary, styles</strong>
+                    <span>All Hub data is stored locally in the desktop app.</span>
+                  </article>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <section class="workspace section-view" data-section="history">
+          <div class="workspace-panel single-panel">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">History</p>
+                <h2>Recent activity</h2>
+              </div>
+              <button id="clear-history" class="ghost" type="button">Clear History</button>
+            </div>
+            <div class="collection-list" id="history-list"></div>
+          </div>
+        </section>
+
+        <section class="workspace section-view" data-section="snippets">
+          <div class="workspace-panel single-panel">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Snippets</p>
+                <h2>Reusable phrase shortcuts</h2>
+              </div>
+            </div>
+            <div class="editor-grid">
+              <section class="setting-card">
+                <h3>Add snippet</h3>
+                <label class="field">
+                  <span>Trigger</span>
+                  <input id="snippet-trigger" placeholder="ty-email" />
+                </label>
+                <label class="field">
+                  <span>Expansion</span>
+                  <textarea id="snippet-content" rows="6" placeholder="Thanks for reaching out..." ></textarea>
+                </label>
+                <button id="save-snippet" class="primary" type="button">Save Snippet</button>
+              </section>
+              <section class="setting-card">
+                <h3>Saved snippets</h3>
+                <div class="collection-list" id="snippets-list"></div>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <section class="workspace section-view" data-section="dictionary">
+          <div class="workspace-panel single-panel">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Dictionary</p>
+                <h2>Custom vocabulary</h2>
+              </div>
+            </div>
+            <div class="editor-grid">
+              <section class="setting-card">
+                <h3>Add term</h3>
+                <label class="field">
+                  <span>Phrase</span>
+                  <input id="dictionary-term" placeholder="open flow" />
+                </label>
+                <label class="field">
+                  <span>Replace with</span>
+                  <input id="dictionary-value" placeholder="OpenFlow" />
+                </label>
+                <button id="save-dictionary" class="primary" type="button">Save Term</button>
+              </section>
+              <section class="setting-card">
+                <h3>Saved terms</h3>
+                <div class="collection-list" id="dictionary-list"></div>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <section class="workspace section-view" data-section="styles">
+          <div class="workspace-panel single-panel">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Styles</p>
+                <h2>Local writing presets</h2>
+              </div>
+            </div>
+            <div class="editor-grid">
+              <section class="setting-card">
+                <h3>Add style</h3>
+                <label class="field">
+                  <span>Name</span>
+                  <input id="style-name" placeholder="Concise" />
+                </label>
+                <label class="field">
+                  <span>Instruction</span>
+                  <textarea id="style-instruction" rows="6" placeholder="Shorten and tighten the writing." ></textarea>
+                </label>
+                <button id="save-style" class="primary" type="button">Save Style</button>
+              </section>
+              <section class="setting-card">
+                <h3>Saved styles</h3>
+                <div class="collection-list" id="styles-list"></div>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <section class="workspace section-view" data-section="settings">
+          <div class="workspace-panel single-panel">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Settings</p>
+                <h2>Core runtime configuration</h2>
+              </div>
+              <button id="save" class="primary" type="button">Save Settings</button>
+            </div>
+            <div class="settings-grid settings-only">
+              <section class="setting-card">
+                <h3>Hotkeys</h3>
+                <label class="field">
+                  <span>Dictate</span>
+                  <input id="hotkey-dictate-settings" value="Ctrl+Shift+D" />
+                </label>
+                <label class="field">
+                  <span>Command</span>
+                  <input id="hotkey-command-settings" value="Ctrl+Shift+E" />
+                </label>
+                <label class="field">
+                  <span>Hands-free</span>
+                  <input id="hotkey-hands-settings" value="Ctrl+Shift+F" />
+                </label>
+              </section>
+
+              <section class="setting-card">
+                <h3>Models</h3>
+                <label class="field">
+                  <span>API Key</span>
+                  <input id="groq-key-settings" type="password" placeholder="gsk_..." />
+                </label>
+                <label class="field">
+                  <span>Whisper</span>
+                  <input id="whisper-model-settings" value="whisper-large-v3-turbo" />
+                </label>
+                <label class="field">
+                  <span>Chat</span>
+                  <input id="chat-model-settings" value="llama-3.1-8b-instant" />
+                </label>
+                <label class="toggle-field" for="llm-enhancement-settings">
+                  <div>
+                    <strong>LLM enhancement</strong>
+                    <p>Clean up dictated text before pasting it.</p>
+                  </div>
+                  <input id="llm-enhancement-settings" type="checkbox" checked />
+                </label>
+              </section>
+
+              <section class="setting-card">
+                <h3>Desktop behavior</h3>
+                <label class="toggle-field" for="launch-on-startup-settings">
+                  <div>
+                    <strong>Launch on startup</strong>
+                    <p>Register OpenFlow to start with Windows.</p>
+                  </div>
+                  <input id="launch-on-startup-settings" type="checkbox" />
+                </label>
+                <label class="toggle-field" for="bar-visible-settings">
+                  <div>
+                    <strong>Show dock bar</strong>
+                    <p>Keep the floating bar visible while the app runs.</p>
+                  </div>
+                  <input id="bar-visible-settings" type="checkbox" checked />
+                </label>
+              </section>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="hub.js"></script>
+  </body>
+</html>

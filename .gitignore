@@ -1,0 +1,30 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Rust / Tauri
+target/
+src-tauri/target/
+
+# Local app/runtime data
+*.log
+*.tmp
+*.temp
+settings.json
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+
+# Bundler / package-manager leftovers
+node_modules/
+
+# Generated installers / archives
+*.msi
+*.exe
+*.zip
+*.7z

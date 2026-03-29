@@ -1,0 +1,30 @@
+{
+  "build": {
+    "beforeBuildCommand": "",
+    "beforeDevCommand": "",
+    "devPath": "../dist",
+    "distDir": "../dist",
+    "withGlobalTauri": true
+  },
+  "package": {
+    "productName": "OpenFlow",
+    "version": "0.1.0"
+  },
+  "tauri": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "OpenFlow Hub",
+        "width": 1240,
+        "height": 820,
+        "resizable": true
+      }
+    ],
+    "bundle": {
+      "active": true,
+      "targets": ["nsis"],
+      "identifier": "com.openflow.app",
+      "icon": ["icons/icon.ico", "icons/icon.png"]
+    }
+  }
+}
