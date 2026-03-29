@@ -4,6 +4,8 @@ Minimal desktop dictation with a floating dock bar, local-first tooling, and opt
 
 ![OpenFlow hero](assets/readme/openflow-hero.png)
 
+![OpenFlow screenshot](assets/readme/openflow-screenshot.png)
+
 ---
 
 ## Why This Exists
