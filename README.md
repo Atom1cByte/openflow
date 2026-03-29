@@ -2,7 +2,7 @@
 
 Minimal desktop dictation with a floating dock bar, local-first tooling, and optional Groq cleanup.
 
-![OpenFlow hero](assets/readme/openflow-hero.png)
+![OpenFlow hero](assets/readme/openflow-hero-v2.png)
 
 ![OpenFlow screenshot](assets/readme/openflow-screenshot.png)
 
