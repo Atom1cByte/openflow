@@ -1,84 +1,72 @@
 # OpenFlow
 
-Minimal desktop dictation with a floating dock bar, local-first tooling, and optional Groq cleanup.
+<p align="center">
+  <img src="assets/readme/openflow-hero-v2.png" alt="OpenFlow hero" width="900" />
+</p>
 
-![OpenFlow hero](assets/readme/openflow-hero-v2.png)
+<p align="center">
+  <img src="https://img.shields.io/badge/Desktop-Windows%20%2B%20Tauri-1f1b18?style=for-the-badge&logo=tauri&logoColor=ffc86b" alt="Desktop badge" />
+  <img src="https://img.shields.io/badge/Voice-Groq%20Whisper-5b2ca0?style=for-the-badge&logo=groq&logoColor=ffffff" alt="Groq badge" />
+  <img src="https://img.shields.io/badge/Storage-Local%20First-2a2421?style=for-the-badge&logo=sqlite&logoColor=f4e8d8" alt="Local-first badge" />
+  <img src="https://img.shields.io/badge/Mode-Hotkey%20Driven-2d2623?style=for-the-badge&logo=keyboard&logoColor=e5c4ff" alt="Hotkey badge" />
+</p>
 
-![OpenFlow screenshot](assets/readme/openflow-screenshot.png)
+<p align="center">
+  Minimal desktop dictation with a floating dock bar, local-first tools, and optional LLM cleanup.
+</p>
 
 ---
 
-## Why This Exists
+## Snapshot
 
-OpenFlow is meant to feel like a lightweight writing layer on top of your desktop:
+<p align="center">
+  <img src="assets/readme/openflow-screenshot.png" alt="OpenFlow runtime dashboard screenshot" width="1000" />
+</p>
+
+---
+
+## What OpenFlow Is
+
+OpenFlow is a desktop dictation layer for fast writing:
 
 - hit a hotkey
 - speak
-- get text back in the app you were already using
+- get text pasted back into the app you were already using
 
-It keeps the useful parts local:
+It keeps the important parts local:
 
-- history
-- snippets
-- dictionary terms
-- writing styles
-- runtime settings
-
-No backend is required for those features.
-
----
-
-## Features
-
-### Core
-- global hotkey dictation
-- floating dock bar
-- Windows startup registration
-- hide/show dock bar
-- local Hub for runtime controls
-
-### Groq
-- Groq Whisper transcription
-- optional LLM enhancement pass
-- cheap default models:
-  - `whisper-large-v3-turbo`
-  - `llama-3.1-8b-instant`
-
-### Local Tools
 - `History`
 - `Snippets`
 - `Dictionary`
 - `Styles`
+- runtime settings
+- dock bar position
+
+The only remote dependency is Groq for transcription and optional text cleanup.
 
 ---
 
-## Screens
+## Feature Stickers
 
-### Hub
-The Hub is where you:
-
-- save your Groq API key
-- configure hotkeys
-- turn LLM enhancement on or off
-- control startup behavior
-- show or hide the dock bar
-
-### Dock Bar
-The dock bar is the always-available entry point:
-
-- click the visualizer mark to reopen the Hub
-- click the close button to hide the bar and bring the Hub back
-- use the hotkey to start dictation
+| Area | Included |
+|---|---|
+| Dictation | Global hotkey capture, floating dock bar, clipboard paste |
+| AI | Groq Whisper transcription, optional Groq cleanup pass |
+| Local Tools | Snippets, dictionary terms, writing styles, activity history |
+| Desktop | Launch on startup, hide/show dock bar, persistent bar position |
+| UI | Hub + minimal dock bar |
 
 ---
 
-## Run In Dev
+## Quick Start
+
+### Run in development
 
 ```bash
 cargo run --manifest-path src-tauri/Cargo.toml
 ```
 
-If Windows says it cannot overwrite `openflow.exe`, stop the running app first:
+### If Windows says `openflow.exe` is locked
 
 ```powershell
 Get-Process openflow -ErrorAction SilentlyContinue | Stop-Process -Force
@@ -87,58 +75,75 @@ cargo run --manifest-path src-tauri/Cargo.toml
 
 ---
 
-## Build
+## Installer
 
-### Dev build
-
-```bash
-cargo build --manifest-path src-tauri/Cargo.toml
-```
-
-### Windows installer
-
-This project is configured for an NSIS bundle through Tauri.
+OpenFlow is configured for a Windows NSIS bundle.
 
 ```bash
 cargo tauri build --manifest-path src-tauri/Cargo.toml
 ```
 
-If `cargo tauri` is missing on your machine, install it first:
+If `cargo tauri` is not installed:
 
 ```bash
 cargo install tauri-cli
 ```
 
+Then enable `Launch on startup` in the app if you want OpenFlow to register itself with Windows startup.
+
 ---
 
-## Project Structure
+## Runtime Modes
+
+### Raw
+- transcription only
+- no LLM rewrite
+- useful when you want exact spoken wording
+
+### Enhanced
+- transcription + cleanup pass
+- fixes punctuation, capitalization, and rough speech patterns
+- useful when you want polished output fast
+
+You can toggle this in `Settings -> LLM enhancement`.
+
+---
+
+## Project Layout
 
 ```text
 D:\Projects\openflow
+├─ assets\readme
+│  ├─ openflow-hero-v2.png
+│  └─ openflow-screenshot.png
 ├─ dist
-│  ├─ index.html      # Hub UI
-│  ├─ hub.css         # Hub styling
-│  ├─ hub.js          # Hub logic + local storage
-│  ├─ bar.html        # Dock bar UI
-│  ├─ bar.css         # Dock bar styling
-│  └─ bar.js          # Dock bar behavior
+│  ├─ index.html
+│  ├─ hub.css
+│  ├─ hub.js
+│  ├─ bar.html
+│  ├─ bar.css
+│  └─ bar.js
 └─ src-tauri
-   ├─ src\main.rs     # Native windowing, hotkeys, recording, Groq calls
-   └─ tauri.conf.json # App/window/bundle config
+   ├─ src\main.rs
+   └─ tauri.conf.json
 ```
 
 ---
 
-## Current Behavior
+## Current Notes
 
-- closing the Hub hides it when the dock bar is still active
-- startup mode hides the Hub and leaves the app running in the background
-- dock bar position is persisted locally
-- LLM enhancement can be enabled or disabled in Settings
+> OpenFlow is local-first, not backend-first.
+
+- Hub data is stored locally
+- the dock bar can be hidden and restored
+- startup mode hides the Hub and keeps the background app alive
+- model defaults are:
+  - `whisper-large-v3-turbo`
+  - `llama-3.1-8b-instant`
 
 ---
 
-## Good Next Steps
+## Next Up
 
 1. Apply dictionary replacements before paste
 2. Expand snippets during dictation or command mode
@@ -149,5 +154,10 @@ D:\Projects\openflow
 
 ## Status
 
-This is a working desktop app, not just a mockup.  
-The UI, storage, and dictation loop are all local. The only remote dependency is Groq for transcription and optional cleanup.
+<p>
+  <img src="https://img.shields.io/badge/Status-Working%20Desktop%20App-8cc8ab?style=flat-square" alt="Status badge" />
+  <img src="https://img.shields.io/badge/UI-Hub%20%2B%20Dock%20Bar-e5c4ff?style=flat-square" alt="UI badge" />
+  <img src="https://img.shields.io/badge/Data-Local-f4d7a1?style=flat-square" alt="Local data badge" />
+</p>
+
+This is a working desktop app, not just a mockup.
